@@ -17,7 +17,7 @@ class Password:
         Returns:
             bool: Whether the repeat character count is under threshold
         """
-        character_count = dict()
+        character_count = {}
         for char in password:
             if char in character_count:
                 if character_count[char] >= threshold:
@@ -43,10 +43,12 @@ class Password:
 
         # At least 1 Upper case, 1 lower case ,least 1 numeric, 1 special character
         special_chars = set(string.punctuation)
-        if not (any(char.isupper() for char in password) and
-                any(char.islower() for char in password) and
-                any(char.isnumeric() for char in password) and
-                any(char in special_chars for char in password)):
+        if (
+            not any(char.isupper() for char in password)
+            or not any(char.islower() for char in password)
+            or not any(char.isnumeric() for char in password)
+            or all(char not in special_chars for char in password)
+        ):
             return False
 
         # No duplicate repeat characters more than 4
@@ -66,7 +68,7 @@ class Password:
                 numeral_char_count += 1
         return True
 
-    def is_similar(self, oldPassword: str, newPassword: str, threshold: float = 0.8) -> bool:
+    def is_similar(self, old_password: str, new_password: str, threshold: float = 0.8) -> bool:
         """Check if the oldPassword and newPassword are similar considering the threshold value
 
         Args:
@@ -77,7 +79,7 @@ class Password:
         Returns:
             bool: whether the two passwords are similar w.r.t. threshold
         """
-        return SequenceMatcher(None, oldPassword, newPassword).ratio() < threshold
+        return SequenceMatcher(None, old_password, new_password).ratio() < threshold
 
     def ChangePassword(self, oldPassword: str, newPassword: str) -> bool:
         """Change the old password with the new password provided
