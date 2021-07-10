@@ -93,6 +93,13 @@ class TestChangePassword(unittest.TestCase):
         self.assertFalse(
             ret_value, 'Change password maximum numeric character check failed')
 
+    @patch('change_password.verify_password')
+    def test_ChangePassword_no_new_password(self, mock_verify_password):
+        mock_verify_password.side_effect = TypeError
+        password = Password()
+        with self.assertRaises(TypeError):
+            password.ChangePassword('myOldPassword')
+
 
 if __name__ == '__main__':
     unittest.main()
