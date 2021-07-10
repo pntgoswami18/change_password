@@ -7,6 +7,4 @@ def verify_password( password: str) -> bool:
         Returns: 
             bool: Whether the old password is valid
         """
-        if "valid" in password:
-            return True
-        return False
+        return "valid" in password
