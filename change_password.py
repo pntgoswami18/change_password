@@ -105,6 +105,14 @@ class Password:
 
 
 def update_password(passwords) -> bool:
+    """Runner method for the change password API
+
+    Args:
+        passwords (Object): JSON object with the old password and new password
+
+    Returns:
+        bool: Whether the change password request was successful
+    """    
     old_password = passwords.get('old_password')
     new_password = passwords.get('new_password')
     password = Password()

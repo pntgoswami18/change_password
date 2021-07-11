@@ -7,6 +7,11 @@ app.add_api('swagger.yml')
 
 @app.route('/')
 def home():
+    """Home directory router for service
+
+    Returns:
+        Text: HTML page
+    """    
     return render_template('home.html')
 
 

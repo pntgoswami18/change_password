@@ -6,6 +6,7 @@ import json
 
 _PASSWORD_API_ROUTE = '/api/password'
 
+
 class TestChangePassword(unittest.TestCase):
     webapp = app.app
     webapp.config['TESTING'] = True
@@ -135,21 +136,23 @@ class TestChangePassword(unittest.TestCase):
                 'new_password': 'MyNewPassword@123456'}
         response = self.webapp.test_client().put(
             _PASSWORD_API_ROUTE, data=json.dumps(data), headers=self.headers)
-        self.assertEqual(response.status_code, 200, 'Password change API did not change password')
+        self.assertEqual(response.status_code, 200,
+                         'Password change API did not change password')
 
     def test_app_change_password_failure(self):
         data = {'old_password': 'myWesdrtsfdsrgrf',
                 'new_password': 'myNewPassworD@123456'}
         response = self.webapp.test_client().put(
             _PASSWORD_API_ROUTE, data=json.dumps(data), headers=self.headers)
-        self.assertEqual(response.status_code, 401, 'Old Password verification failed in API')
+        self.assertEqual(response.status_code, 401,
+                         'Old Password verification failed in API')
 
         data['old_password'] = 'myvalidOldPassword'
         data['new_password'] = 'myNewPassword@$12'
         response = self.webapp.test_client().put(
             _PASSWORD_API_ROUTE, data=json.dumps(data), headers=self.headers)
-        self.assertEqual(response.status_code, 401, 'Password minimum length verification failed in API')
-
+        self.assertEqual(response.status_code, 401,
+                         'Password minimum length verification failed in API')
 
 
 if __name__ == '__main__':
