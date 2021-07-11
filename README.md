@@ -13,15 +13,17 @@ The API service is dockerized.
 
 ## Installation
 ### Non-docker installation
-1. You can use either the default `pip` or `pipenv` to install the dependencies; **requirements.txt** and **Pipfile.lock** are both furished for the sake.  
+You can use either the default `pip` or `pipenv` to install the dependencies; **requirements.txt** and **Pipfile.lock** are both furished for the sake.  
 Installation through `pip`:
-    ```
-    pip install -r requirements.txt
-    ```
-    Installation through `pipenv`, requires you to install `pipenv` first:
-    ```
-    pipenv install
-    ```
+```
+pip install -r requirements.txt
+```
+Installation through `pipenv`, requires you to install `pipenv` first:
+```
+pipenv install
+```
+
+### Dockerized installation
 
 ## Usage
 ### ChangePassword functionality
@@ -29,4 +31,25 @@ To check the functionality of the API, start the webserver
 ```
 python webserver.py
 ```
-Navigating to http://localhost:5000/ should show you the home page. The swagger documentation is hosted under http://localhost:5000/api/ui/ where you can manually test out the API.  
+Navigating to http://localhost:5000/ should show you the home page.![Home page](images/one.png "Home page")  
+The swagger documentation is hosted under http://localhost:5000/api/ui/ where you can manually test out the API.![Swagger UI](images/two.png "Swagger UI")  
+
+### Testing
+Testing is implemented through `unittest` and `mock` module. The test cases can be executed as 
+```
+coverage run test_change_password.py
+```
+![Tests run](images/three.png "Tests run")
+### Coverage
+When the test cases are run through the `coverage` module, the test case statuses can be converted into a report.
+```
+coverage report *.py  
+```
+![coverage report](images/four.png "Coverage report")  
+
+Export these results into an html report.
+```
+coverage html *.py 
+```
+The generated report can be viewed at [htmlconv/index.html](htmlcov/index.html)
+![HTML Coverage report](images/five.png "HTML Report")
