@@ -1,5 +1,6 @@
 from difflib import SequenceMatcher
 import string
+from flask import abort
 from verify_password import verify_password
 
 
@@ -100,7 +101,15 @@ class Password:
             return False
 
         # check new password for password policy
-        if not self.validate_password_policy(newPassword):
-            return False
+        return bool(self.validate_password_policy(newPassword))
 
-        return True
+
+def update_password(passwords) -> bool:
+    old_password = passwords.get('old_password')
+    new_password = passwords.get('new_password')
+    password = Password()
+    ret_value = password.ChangePassword(old_password, new_password)
+    if ret_value == True:
+        return ret_value
+    else:
+        abort(401, 'Change password failed ')

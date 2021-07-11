@@ -1,0 +1,38 @@
+swagger: "2.0"
+info:
+  description: Swagger file for change_password API functionality
+  version: "1.0.0"
+  title: ChangePassword API
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  /password:
+    put:
+      operationId: "change_password.update_password"
+      tags:
+        - "Password"
+      summary: "Update the password"
+      description: "Update the password if old password is verified and the new password satisfies password policies"
+      parameters:
+        - name: passwords
+          in: body
+          description: passwords
+          schema:
+            type: object
+            properties:
+              old_password:
+                type: string
+              new_password:
+                type: string
+          required: True
+      responses:
+        200:
+          description: "Successful update of password"
+          schema:
+            type: "boolean"
