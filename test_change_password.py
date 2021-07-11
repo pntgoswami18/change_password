@@ -15,15 +15,15 @@ class TestChangePassword(unittest.TestCase):
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_similar_password(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
-            'myOldPassword', 'myNewPassword@$12345')
+            'myNewPassword', 'myNewPassword@12345')
         self.assertFalse(ret_value, 'Change password similarity check failed')
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_min_length(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
             'myOldPassword', 'myNewPassword@$12')
@@ -32,7 +32,7 @@ class TestChangePassword(unittest.TestCase):
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_uppercase(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
             'myOldPassword', 'mynewpassword@123456')
@@ -41,7 +41,7 @@ class TestChangePassword(unittest.TestCase):
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_lowercase(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
             'myOldPassword', 'MYNEWPASSWORD@123456')
@@ -50,7 +50,7 @@ class TestChangePassword(unittest.TestCase):
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_numeric(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
             'myOldPassword', 'mynewpassword@UPPERLET')
@@ -59,7 +59,7 @@ class TestChangePassword(unittest.TestCase):
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_specialchar(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
             'myOldPassword', 'mynewpasswordA123456')
@@ -68,7 +68,7 @@ class TestChangePassword(unittest.TestCase):
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_duplicate_char(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
             'myOldPassword', 'mynewpassssword@123456')
@@ -77,7 +77,7 @@ class TestChangePassword(unittest.TestCase):
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_max_specialchar(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
             'myOldPassword', 'mynewpa$sw*rd@1#345&')
@@ -86,7 +86,7 @@ class TestChangePassword(unittest.TestCase):
 
     @patch('change_password.verify_password')
     def test_ChangePassword_failure_max_numeric(self, mock_verify_password):
-        mock_verify_password.return_value = False
+        mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
             'myOldPassword', 'myN3wPa55w0rd@123456!')
