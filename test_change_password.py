@@ -45,7 +45,7 @@ class TestChangePassword(unittest.TestCase):
         mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
-            'myOldPassword', 'mynewpassword@123456')
+            'myOldPassword', 'mynwpassword@123456')
         self.assertFalse(
             ret_value, 'Change password uppercase character check failed')
 
@@ -54,7 +54,7 @@ class TestChangePassword(unittest.TestCase):
         mock_verify_password.return_value = True
         password = Password()
         ret_value = password.ChangePassword(
-            'myOldPassword', 'MYNEWPASSWORD@123456')
+            'myOldPassword', 'MYNEPASSWORD@123456')
         self.assertFalse(
             ret_value, 'Change password lowercase character check failed')
 
@@ -132,14 +132,14 @@ class TestChangePassword(unittest.TestCase):
 
     def test_app_change_password(self):
         data = {'old_password': 'myvalidWesdrtsfdsrgrf',
-                'new_password': 'myNewPassword@123456'}
+                'new_password': 'MyNewPassword@123456'}
         response = self.webapp.test_client().put(
             _PASSWORD_API_ROUTE, data=json.dumps(data), headers=self.headers)
         self.assertEqual(response.status_code, 200, 'Password change API did not change password')
 
     def test_app_change_password_failure(self):
         data = {'old_password': 'myWesdrtsfdsrgrf',
-                'new_password': 'myNewPassword@123456'}
+                'new_password': 'myNewPassworD@123456'}
         response = self.webapp.test_client().put(
             _PASSWORD_API_ROUTE, data=json.dumps(data), headers=self.headers)
         self.assertEqual(response.status_code, 401, 'Old Password verification failed in API')
