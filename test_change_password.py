@@ -1,9 +1,19 @@
 import unittest
-from change_password import Password
+from change_password import Password, update_password
 from unittest.mock import patch
+from webserver import app
+import json
 
+_PASSWORD_API_ROUTE = '/api/password'
 
 class TestChangePassword(unittest.TestCase):
+    webapp = app.app
+    webapp.config['TESTING'] = True
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/problem+json'
+    }
+
     @patch('change_password.verify_password')
     def test_ChangePassword_success(self, mock_verify_password):
         mock_verify_password.return_value = True
@@ -99,6 +109,47 @@ class TestChangePassword(unittest.TestCase):
         password = Password()
         with self.assertRaises(TypeError):
             password.ChangePassword('myOldPassword')
+
+    def test_changePassword_update_password(self):
+        passwords = {
+            'old_password': 'validOldPassword',
+            'new_password': 'someNewPassword@123'
+        }
+        self.assertTrue(update_password(passwords),
+                        'update_password for valid passwords object failed')
+
+    def test_changePassword_update_password_abort(self):
+        passwords = {
+            'old_password': 'myOldPassword',
+            'new_password': 'someNewPassword@123'
+        }
+        with self.assertRaises(Exception):
+            update_password(passwords)
+
+    def test_app_home_page(self):
+        response = self.webapp.test_client().get('/', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_app_change_password(self):
+        data = {'old_password': 'myvalidWesdrtsfdsrgrf',
+                'new_password': 'myNewPassword@123456'}
+        response = self.webapp.test_client().put(
+            _PASSWORD_API_ROUTE, data=json.dumps(data), headers=self.headers)
+        self.assertEqual(response.status_code, 200, 'Password change API did not change password')
+
+    def test_app_change_password_failure(self):
+        data = {'old_password': 'myWesdrtsfdsrgrf',
+                'new_password': 'myNewPassword@123456'}
+        response = self.webapp.test_client().put(
+            _PASSWORD_API_ROUTE, data=json.dumps(data), headers=self.headers)
+        self.assertEqual(response.status_code, 401, 'Old Password verification failed in API')
+
+        data['old_password'] = 'myvalidOldPassword'
+        data['new_password'] = 'myNewPassword@$12'
+        response = self.webapp.test_client().put(
+            _PASSWORD_API_ROUTE, data=json.dumps(data), headers=self.headers)
+        self.assertEqual(response.status_code, 401, 'Password minimum length verification failed in API')
+
 
 
 if __name__ == '__main__':
