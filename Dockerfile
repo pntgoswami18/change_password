@@ -15,5 +15,8 @@ RUN python -m pip install -r requirements.txt
 WORKDIR /app
 COPY . /app
 
+# run unit tests
+RUN coverage run test_change_password.py
+
 ENTRYPOINT [ "python" ]
 CMD [ "webserver.py" ]

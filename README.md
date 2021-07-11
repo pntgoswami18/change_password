@@ -22,9 +22,16 @@ Installation through `pipenv`, requires you to install `pipenv` first:
 ```
 pipenv install
 ```
-
 ### Dockerized installation
-
+Build the docker image for API service
+```
+docker build --tag change_password_app .
+```
+Spawn a container from the generated image
+```
+docker run --name change_password_app -p 5000:5000 change_password_app
+```
+![docker container](images/six.png 'Docker comtainer')
 ## Usage
 ### ChangePassword functionality
 To check the functionality of the API, start the webserver
