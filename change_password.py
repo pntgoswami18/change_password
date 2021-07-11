@@ -80,7 +80,7 @@ class Password:
         Returns:
             bool: whether the two passwords are similar w.r.t. threshold
         """
-        return SequenceMatcher(None, old_password, new_password).ratio() < threshold
+        return SequenceMatcher(None, old_password, new_password).ratio() >= threshold
 
     def ChangePassword(self, oldPassword: str, newPassword: str) -> bool:
         """Change the old password with the new password provided
@@ -97,7 +97,7 @@ class Password:
             return False
 
         # similar to old password < 80% match
-        if not self.is_similar(oldPassword, newPassword):
+        if self.is_similar(oldPassword, newPassword):
             return False
 
         # check new password for password policy
