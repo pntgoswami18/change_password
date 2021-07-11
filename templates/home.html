@@ -4,29 +4,39 @@
     <title>
         Change Password API
     </title>
+    <link rel="stylesheet" href='/static/main.css' type="text/css">
 </head>
 
 <body>
+    <div id="cursor"></div>
+    <script>
+        var cursor = document.getElementById("cursor");
+        document.onmousemove = function (e) {
+            cursor.style.left = e.pageX - 25 + "px";
+            cursor.style.top = e.pageY - 25 + "px";
+            cursor.style.display = 'block';
+        }
+    </script>
     <div id='title'>
 
     </div>
-    <div id='descriptions'>
-        <p>
-        <h3>
+    <div id='descriptions' class="container">
+        <section>
+        <h2>
             Swagger documentation at <a href='/api/ui/'>/api/ui/</a>
-        </h3>
-        </p>
-        <p>
-        <h3>
+        </h2>
+    </section>
+        <section>
+        <h2>
             Change Password PUT API is at <a href='/api/password'>/api/password</a>
-        </h3>
-        </p>
-        <p>
-        <h3>
+        </h2>
+    </section>
+        <section>
+        <h2>
             View Test Coverage report at /htmlcov/index.html under the app directory. Refer readme to know how to generate
             the coverage report
-        </h3>
-        </p>
+        </h2>
+    </section>
     </div>
 </body>
 
